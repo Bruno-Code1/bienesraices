@@ -29,11 +29,11 @@
            unlink('../imagenes/' . $propiedad['imagen']);
 
             // Eliminar la propiedad
-            $query = "SELECT FROM propiedades WHERE id = {$id}";
+            $query = "DELETE FROM propiedades WHERE id = {$id}";
             $resultado = mysqli_query($db, $query);
 
             if($resultado) {
-                header('Location: /bienesraices_inicio/admin');
+                header('Location: /bienesraices_inicio/admin/index.php?resultado=3');
             }
         }
     }
@@ -50,6 +50,8 @@
         <p class="alerta exito">Anuncio creado correctamente</p>
     <?php elseif(intval($resultado) === 2): ?>
         <p class="alerta exito">Anuncio Actualizado Correctamente</p>
+    <?php elseif( intval($resultado) === 3 ): ?>
+        <p class="alerta exito">Anuncio Eliminado Correctamente</p>
     <?php endif; ?>
 
         <a href="/bienesraices_inicio/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>
