@@ -14,12 +14,12 @@ $resultado = mysqli_query($db, $query);
         <?php while($propiedad = mysqli_fetch_assoc($resultado)):?>
         <div class="anuncio">
                     
-                <img loading="lazy" src="/imagenes/<?php $propiedad['imagen']; ?>" alt="Imagen Anuncio">
+                <img loading="lazy" src="/bienesraices_inicio/imagenes/<?php echo $propiedad['imagen']; ?>" alt="Imagen Anuncio">
                  
                 <div class="contenido-anuncio">
                     <h3><?php echo $propiedad['titulo']; ?></h3>
                     <p><?php echo $propiedad['descripcion']; ?></p>
-                    <p class="precio"><?php echo $propiedad['precio'] ?></p>
+                    <p class="precio">$<?php echo $propiedad['precio'] ?></p>
 
                     <ul class="iconos-caracteristicas">
                         <li>
@@ -36,7 +36,7 @@ $resultado = mysqli_query($db, $query);
                         </li>
                     </ul>
 
-                    <a href="anuncio.php" class="boton-amarillo-block">
+                    <a href="anuncio.php?id=<?php echo $propiedad['id']; ?>" class="boton-amarillo-block">
                         Ver Propiedad
                     </a>
                 </div>
@@ -46,4 +46,5 @@ $resultado = mysqli_query($db, $query);
 
 <?php 
     // Cerrar la conexión
+    mysqli_close($db);
 ?>
