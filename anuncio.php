@@ -6,8 +6,9 @@
     if (!$id) {
         header('Location: /bienesraices_inicio/index.php');
     }
-        // Importar la conexión
-    require __DIR__ . '/includes/config/database.php';
+
+    require 'includes/app.php';
+       
     $db = conectarDB();
 
     // Consultar la base de datos
@@ -22,7 +23,7 @@
 
     $propiedad = mysqli_fetch_assoc($resultado);
 
-    require 'includes/funciones.php';
+    
     incluirTemplate('header', $inicio = false);
 
 ?>

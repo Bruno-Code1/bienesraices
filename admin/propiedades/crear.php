@@ -1,14 +1,9 @@
 <?php 
-    require '../../includes/funciones.php';
-    $auth = estaAutenticado();
-    
-    if(!$auth) {
-        header('Location: /bienesraices_inicio/index.php');
-    }
-    
+    require '../../includes/app.php';
 
-    // Base de datos
-    require '../../includes/config/database.php';
+    use App\Propiedad;
+
+   estaAutenticado();
 
     $db = conectarDB();
 
@@ -35,13 +30,17 @@
     // Ejecutar el código una vez que el usuario envía el formulario
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+        $propiedad = new Propiedad($_POST);
+
+        $propiedad->guardar();
+
         // echo "<pre>";
         // var_dump($_POST);
         // echo "</pre>";
 
-        // echo "<pre>";
-        // var_dump($_FILES);
-        // echo "</pre>";
+         echo "<pre>";
+         var_dump($_FILES);
+         echo "</pre>";
 
         $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
         $precio = mysqli_real_escape_string($db, $_POST['precio']);
@@ -176,7 +175,7 @@
            <fieldset>
             <legend>Vendedor</legend>
 
-            <select name="vendedor">
+            <select name="vendedores_id">
                 <option value="" selected disabled>--Seleccionar--</option>
                 <?php while($vendedor = mysqli_fetch_assoc($resultado)) : ?>
                     <option <?php echo $vendedores_id === $vendedor['id'] ? 'selected' : '';?> value="<?php echo $vendedor['id']; ?>"><?php echo $vendedor['nombre'] . " " . $vendedor['apellido']; ?></option>
