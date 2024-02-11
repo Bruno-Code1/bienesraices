@@ -20,7 +20,7 @@
     // Ejecutar el código una vez que el usuario envía el formulario
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Crear una nueva instancia
-        $propiedad = new Propiedad($_POST);
+        $propiedad = new Propiedad($_POST['propiedad']);
 
         /* Subida de archivos */
 
@@ -28,8 +28,8 @@
         $nombreImagen = md5(uniqid( rand(), true )) . ".jpg";
         
         // Realiza un resize a la imagen con intervention
-        if($_FILES['imagen']['tmp_name']) {
-            $image = Image::make($_FILES['imagen']['tmp_name'])->fit(800,600);
+        if($_FILES['propiedad']['tmp_name']['imagen']) {
+            $image = Image::make($_FILES['propiedad']['tmp_name']['imagen'])->fit(800,600);
             $propiedad->setImagen($nombreImagen);
         }
         
@@ -47,13 +47,7 @@
             $image->save(CARPETA_IMAGENES . $nombreImagen);
 
             // Guarda en la base de datos
-            $resultado = $propiedad->guardar();
-
-            // Mensaje de exito
-            if ($resultado) {
-                // Redireccionar al usuario.
-            header('Location: /bienesraices_inicio/admin/index.php?resultado=1');
-            }
+            $propiedad->guardar();
         }
     }
 
@@ -75,6 +69,8 @@
 
         <form class="formulario" method="POST" action="/bienesraices_inicio/admin/propiedades/crear.php" enctype="multipart/form-data">
             <?php include '../../includes/templates/formulario_propiedades.php'; ?>
+            
+            <input type="submit" value="Crear Propiedad" class="boton boton-verde">
         </form>
     </main>
 
